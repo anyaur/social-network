@@ -1,0 +1,15 @@
+.content {
+    grid-area: c;
+    background-color: #ECECEC;
+}
+  
+.content .img {
+    margin: 10px;
+    width: 270px;
+    border: 16px solid white;
+    border-radius: 12px;
+}
+
+.ul.test {
+    color: green;
+}
