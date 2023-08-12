@@ -7,6 +7,8 @@ import Users from './Users';
 import axios from 'axios';
 import Preloader from '../common/preloader/preloader';
 import { withAuthRedirect } from '../../hoc/WithAuthRedirect';
+import classes from './Users.module.css'
+
 import {getUsersData, getPageSize, getTotalUsersCount, getPortionSize, getCurrentPage, getIsFetching, getFollowingInProgress} from '../../redux/users-selectors'
 
 
@@ -51,7 +53,7 @@ class UsersApiContainer extends React.Component<UsersApiCProps> {
     }
 
     render() {
-        return <div>
+        return <div className={classes.content}>
             {this.props.isFetching && <Preloader /> }
             <Users totalUsersCount={this.props.totalUsersCount}
                 users={this.props.users}

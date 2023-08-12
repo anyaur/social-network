@@ -1,6 +1,7 @@
 .content {
-    grid-area: c;
+    /*grid-area: c;*/
     background-color: #ECECEC;
+    overflow-y: auto;
 }
   
 .content .img {
