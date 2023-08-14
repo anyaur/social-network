@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter, NavLink, Route, Routes } from 'react-router-dom';
 import { StateFromReducersMapObject } from 'redux';
-import { follow, unfollow, setUsers, setCurrentPage, setTotalUsersCount, toggleIsFetching, toggleFollowingInProgress, getUsers } from '../../redux/users-reducer';
+import { follow, setIsFriend, unfollow, setUsers, setCurrentPage, setTotalUsersCount, toggleIsFetching, toggleFollowingInProgress, getUsers } from '../../redux/users-reducer';
 import { connect } from 'react-redux';
 import Users from './Users';
 import axios from 'axios';
@@ -9,7 +9,7 @@ import Preloader from '../common/preloader/preloader';
 import { withAuthRedirect } from '../../hoc/WithAuthRedirect';
 import classes from './Users.module.css'
 
-import {getUsersData, getPageSize, getTotalUsersCount, getPortionSize, getCurrentPage, getIsFetching, getFollowingInProgress} from '../../redux/users-selectors'
+import {getUsersData, getIsFriend, getPageSize, getTotalUsersCount, getPortionSize, getCurrentPage, getIsFetching, getFollowingInProgress} from '../../redux/users-selectors'
 
 
 interface UsersApiCProps {
@@ -29,6 +29,7 @@ interface UsersApiCProps {
     }>;
     totalUsersCount: number;
     pageSize: number;
+    friend: boolean;
     portionSize: number;
     currentPage: number;
     follow(userId: number): void;
@@ -40,16 +41,16 @@ interface UsersApiCProps {
     toggleIsFetching(isFetching: boolean): void;
     toggleFollowingInProgress(isFollowingInProgress: boolean): void;
     followingInProgress: Array<number>;
-    getUsers(currentPage: number, pageSize: number): void;
+    getUsers(currentPage: number, pageSize: number, friend: boolean): void;
 }
 
 class UsersApiContainer extends React.Component<UsersApiCProps> {
     componentDidMount(): void {
-        this.props.getUsers(this.props.currentPage, this.props.pageSize);
+        this.props.getUsers(this.props.currentPage, this.props.pageSize, this.props.friend);
     }
 
     onPageChanged = (pageNumber: number) => {
-        this.props.getUsers(pageNumber, this.props.pageSize);
+        this.props.getUsers(pageNumber, this.props.pageSize, this.props.friend);
     }
 
     render() {
@@ -65,6 +66,8 @@ class UsersApiContainer extends React.Component<UsersApiCProps> {
                 follow={this.props.follow}
                 toggleFollowingInProgress={this.props.toggleFollowingInProgress}
                 followingInProgress={this.props.followingInProgress}
+                getUsers={this.props.getUsers}
+                friend={this.props.friend}
             />
         </div>
     }
@@ -78,11 +81,12 @@ const mapStateToProps = (state: any) => {
         totalUsersCount: getTotalUsersCount(state),
         currentPage: getCurrentPage(state),
         isFetching: getIsFetching(state),
+        friend: getIsFriend(state),
         followingInProgress: getFollowingInProgress(state)
     }
 }
 
-const DialogsContainer = /*withAuthRedirect(*/connect(mapStateToProps, 
+const UsersContainer = /*withAuthRedirect(*/connect(mapStateToProps, 
     {
         follow,
         unfollow,
@@ -95,4 +99,4 @@ const DialogsContainer = /*withAuthRedirect(*/connect(mapStateToProps,
     }
     )(UsersApiContainer)/*)*/;
 
-export default DialogsContainer;
+export default UsersContainer;

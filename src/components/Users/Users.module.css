@@ -1,7 +1,11 @@
 .content {
     overflow-y: auto;
     padding: 1em;
+    grid-area: c;
 }
+
+
+
 .userPhoto {
     margin: 10px;
     width: 70px;
@@ -29,4 +33,8 @@
 
 .nonSelectedPage {
     font-weight: normal;
+}
+
+.checkbox {
+    margin-top: 10px;
 }

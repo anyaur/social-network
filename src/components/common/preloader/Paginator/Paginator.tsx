@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import classes from './Paginator.module.css'
 import prev from "../../../../assets/images/prev.png";
 
@@ -23,6 +23,9 @@ let Paginator = (props: PaginatorProps) => {
     let leftBorder = portionNumber * portionSize - portionSize + 1;
     let rightBorder = portionNumber * portionSize;
 
+
+  
+
     return <div className={classes.paginator}>
 
             {portionNumber > 1 &&
@@ -36,7 +39,7 @@ let Paginator = (props: PaginatorProps) => {
                     .filter(p => p >= leftBorder && p <= rightBorder)
                     .map(p => {
                         return <span className={props.currentPage === p ? classes.selectedPage : classes.pagination}
-                            onClick={(e) => props.onPageChanged(p)}>{p}</span>
+                            onClick={() => props.onPageChanged(p)}>{p}</span>
                     })
             }
             {portionNumber < portionCount &&

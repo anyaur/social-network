@@ -50,7 +50,6 @@ const Dialogs = (props: ElementsProps) => {
 }
 
 const AddMessageForm = (props: any) => {
-    console.log('rerender')
     return (
         <Formik
             initialValues={{ newMessageBody: "" }}

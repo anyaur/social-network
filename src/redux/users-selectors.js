@@ -12,6 +12,10 @@ export const getPageSize = (state) => {
     return state.usersData.pageSize;
 }
 
+export const getIsFriend = (state) => {
+    return state.usersData.friend;
+}
+
 export const getPortionSize = (state) => {
     return state.usersData.portionSize;
 }

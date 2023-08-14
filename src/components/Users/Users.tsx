@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import classes from './Users.module.css'
 import userPhoto from '../../assets/images/user.png'
 import { NavLink } from 'react-router-dom';
@@ -30,24 +30,48 @@ interface UsersProps {
     onPageChanged(pageNumber: number): void;
     toggleFollowingInProgress(isFollowingInProgress: boolean, userId: number): void;
     followingInProgress: Array<number>;
+    getUsers(currentPage: number, pageSize: number, friend: boolean | null): void;
+    friend: boolean;
+
+
 }
 
 let Users = (props: UsersProps) => {
+    const [checkbox, setCheckbox] = useState(false);
+
+
+    useEffect(() => {
+        if (checkbox) {
+            props.getUsers(props.currentPage, props.pageSize, null)
+        }
+        else {
+            props.getUsers(props.currentPage, props.pageSize, true)
+        }
+    }, [checkbox]);
     return <div>
         <Paginator totalItemsCount={props.totalUsersCount} pageSize={props.pageSize}
             currentPage={props.currentPage} onPageChanged={props.onPageChanged} portionSize={props.portionSize} />
-            <div>
-        {
-            props.users.map(u => <User
-                key={u.id}
-                user={u}
-                followingInProgress={props.followingInProgress}
-                follow={props.follow}
-                unfollow={props.unfollow}
-            />
-            )
-        }
+        <div>
+            <div className={classes.checkbox}>
+                <input type="checkbox" checked={checkbox}
+                    onChange={e => setCheckbox(e.target.checked)}
+                    name='findAllUsers'
+                />
+                <label htmlFor="findAllUsers">Показать всех пользователей</label>
+            </div>
+            {
+                props.users
+                    .map(u => <User
+                        key={u.id}
+                        user={u}
+                        followingInProgress={props.followingInProgress}
+                        follow={props.follow}
+                        unfollow={props.unfollow}
+                    />
+                    )
+            }
         </div>
+
     </div >
 }
 

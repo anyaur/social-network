@@ -14,11 +14,7 @@ interface PostElementsProps {
 
 
 class MyPosts extends React.PureComponent<PostElementsProps> {
-
-    
     render() {
-        console.log('render')
-
     let PostElements = this.props.PostsData
         .map(p => <Post message={p.message} id={p.id} />)
 

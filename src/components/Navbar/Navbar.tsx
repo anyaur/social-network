@@ -21,7 +21,7 @@ const Navbar = () => {
         </div>
         <div>
           <NavLink to='Users' className={({ isActive }) => isActive ? `${classes.active}` : `${classes.inactive}`}>
-            Users</NavLink>
+            Friends</NavLink>
         </div>
       </nav>
 
